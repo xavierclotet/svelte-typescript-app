@@ -1,0 +1,75 @@
+<script lang="ts">
+  import { onMount } from "svelte";
+  // import { BggGame } from "./models";
+  import { fromFetch } from "rxjs/fetch";
+  import { map, catchError, switchMap } from "rxjs/operators";
+  import { of } from "rxjs";
+
+  interface BggGame {
+    gameId: number;
+    name: string;
+    rank: number;
+    thumbnail: string;
+    yearPublished: number;
+  }
+  export let top: string = "10";
+  const title = `Hotness BGG TOP ${top}`;
+  let hotness: BggGame[] = [];
+
+  onMount(async () => {
+    const res = await fetch("http://bgg-json.azurewebsites.net/hot");
+    hotness = await res.json();
+  });
+
+  /*   function getHotness() {
+    return fromFetch("http://bgg-json.azurewebsites.net/hot").pipe(
+      switchMap((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          return of({ error: true, message: `Error ${response.status}` });
+        }
+      }),
+      catchError((err) => of({ error: true, message: err.message }))
+    );
+  }
+ */
+  function goToBgg(game: BggGame): void {
+    const url = `https://boardgamegeek.com/boardgame/${game.gameId}`;
+    window.open(url);
+  }
+</script>
+
+<!-- <pre>{JSON.stringify($hotness)}</pre> -->
+<div class="text-sm bg-indigo-500 text-white mb-6 rounded px-2 py-2 mx-2">
+  {title}
+</div>
+
+<div class="flex flex-wrap mx-2">
+
+  {#each hotness.slice(0, top) as game}
+    <div
+      class="flex px-4 py-4 justify-between bg-white dark:bg-gray-600 shadow-xl
+      rounded-lg w-50">
+      <div class="flex flex-col justify-between w-60 overflow-hidden">
+        <div
+          class="ml-4 uppercase text-gray-600 dark:text-gray-400 mb-2
+          hover:underline cursor-pointer "
+          on:click={goToBgg(game)}>
+          <span class="font-bold">{game.rank}.</span>
+          {game.name.substring(0, 10)} ({game.yearPublished})
+        </div>
+        <img
+          class="h-15 w-15 rounded-full"
+          src={game.thumbnail}
+          alt={game.name}
+          title="{game.rank}.- {game.name}"
+          style="height: 158px; width: 158px"
+          target="_blank" />
+
+      </div>
+
+    </div>
+  {/each}
+
+</div>
