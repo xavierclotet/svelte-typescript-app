@@ -1,9 +1,5 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  // import { BggGame } from "./models";
-  import { fromFetch } from "rxjs/fetch";
-  import { map, catchError, switchMap } from "rxjs/operators";
-  import { of } from "rxjs";
 
   interface BggGame {
     gameId: number;
@@ -12,8 +8,8 @@
     thumbnail: string;
     yearPublished: number;
   }
-  export let top: string = "10";
-  const title = `Hotness BGG TOP ${top}`;
+  export let top: number = 10;
+  $: title = `Hotness BGG TOP ${top}`;
   let hotness: BggGame[] = [];
 
   onMount(async () => {
@@ -21,19 +17,6 @@
     hotness = await res.json();
   });
 
-  /*   function getHotness() {
-    return fromFetch("http://bgg-json.azurewebsites.net/hot").pipe(
-      switchMap((response) => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          return of({ error: true, message: `Error ${response.status}` });
-        }
-      }),
-      catchError((err) => of({ error: true, message: err.message }))
-    );
-  }
- */
   function goToBgg(game: BggGame): void {
     const url = `https://boardgamegeek.com/boardgame/${game.gameId}`;
     window.open(url);
