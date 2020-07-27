@@ -11,7 +11,9 @@
   export let user: GoogleUser;
 </script>
 
-<h3>Hola {user.displayName}!</h3>
-
-<img src={user.photoURL} width="100" alt="user avatar" />
-<!-- <p>Your userID is { uid }</p> -->
+<img
+  src={user.photoURL}
+  width="75"
+  alt=""
+  title={user.displayName}
+  class="px-2 py-2 rounded-full w-12 h-12" />

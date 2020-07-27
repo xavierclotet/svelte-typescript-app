@@ -24,7 +24,8 @@
 </script>
 
 <!-- <pre>{JSON.stringify($hotness)}</pre> -->
-<div class="text-sm bg-indigo-500 text-white mb-6 rounded px-2 py-2 mx-2">
+<div
+  class="text-sm bg-teal-700 text-white mb-6 rounded px-2 py-2 mx-2 uppercase">
   {title}
 </div>
 
