@@ -1,11 +1,6 @@
 <script>
-  import Profile from "./components/Profile.svelte";
-  /* import Todos from "./Todos.svelte"; */
-  import { auth, googleProvider } from "./firebase";
-  import { authState } from "rxfire/auth";
-  import { map } from "rxjs/operators";
-  import Hotness from "./components/Hotness.svelte";
-  import InputNumber from "./components/InputNumber.svelte";
+  import { Router } from "@sveltech/routify";
+  import { routes } from "@sveltech/routify/tmp/routes";
 
   /*   interface GoogleUser {
     uid: string;
@@ -15,23 +10,11 @@
     photoURL: string;
     providerId: string;
   } */
-
-  let user;
-  let top = 10;
-
-  $: console.log(top);
-
-  const unsubscribe = authState(auth)
-    .pipe(map((user) => user?.providerData[0]))
-    .subscribe((u) => {
-      user = u;
-    });
-  function login() {
-    auth.signInWithPopup(googleProvider);
-  }
 </script>
 
-<section>
+<Router {routes} />
+
+<!-- <section>
 
   <header class="flex justify-between bg-gray-900">
 
@@ -67,8 +50,7 @@
     </div>
   </header>
 
-  <!-- <Todos uid={user.uid} /> -->
-  <!-- <InputNumber bind:value={top} /> -->
+  
   {#if user}
     <div class="flex mx-2 text-md">
       <div class="mr-4 py-2">Show</div>
@@ -84,4 +66,6 @@
     </div>
     <Hotness {top} />
   {/if}
-</section>
+</section> -->
+
+<!-- <InputNumber bind:value={top} /> -->
