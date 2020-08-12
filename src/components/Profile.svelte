@@ -14,6 +14,6 @@
 <img
   src={user.photoURL}
   width="75"
-  alt=""
+  alt={user.displayName}
   title={user.displayName}
   class="px-2 py-2 rounded-full w-12 h-12" />

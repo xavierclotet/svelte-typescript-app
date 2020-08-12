@@ -11,7 +11,7 @@
     ["/index", "Home"],
     ["/hotness", "Hotness"],
     ["/search", "Buscar"],
-    ["/about", "About"],
+    ["/todos", "Todos"],
   ];
 
   /*   function login() {
@@ -19,37 +19,40 @@
   } */
 </script>
 
-<nav class="flex justify-between bg-white px-4 shadow-md ">
+<User let:user let:auth>
 
-  <!-- {user ? 'justify-between' : 'justify-between'} -->
-  <User let:user let:auth>
-    <div>
-      <Profile {user} />
-    </div>
-    <div class="flex justify-center">
-      {#each links as [path, name]}
-        <a
-          class:text-teal-500={$isActive(path)}
-          class:border-teal-500={$isActive(path)}
-          class="no-underline text-gray-500 border-b-2 uppercase tracking-wide
-          font-bold text-xs py-3 mr-8"
-          href={$url(path)}>
-          {name}
-        </a>
-      {/each}
-    </div>
-    <div>
-      <button
-        class="mx-2 my-2 inline-flex items-center justify-center px-2 py-1
-        text-base leading-5 rounded-md border font-medium shadow-sm transition
-        ease-in-out duration-150 focus:outline-none focus:shadow-outline
-        bg-teal-600 border-teal-600 text-gray-100 hover:bg-teal-500
-        hover:border-teal-500 hover:text-gray-100"
-        on:click={() => auth.signOut()}>
-        Logout
-      </button>
-    </div>
-    <div slot="signed-out">
+  <div slot="default">
+    <nav class="flex justify-between bg-white px-4 shadow-md">
+      <div>
+        <Profile {user} />
+      </div>
+      <div class="flex justify-center">
+        {#each links as [path, name]}
+          <a
+            class:text-teal-500={$isActive(path)}
+            class:border-teal-500={$isActive(path)}
+            class="no-underline text-gray-500 border-b-2 uppercase tracking-wide
+            font-bold text-xs py-3 mr-8"
+            href={$url(path)}>
+            {name}
+          </a>
+        {/each}
+      </div>
+      <div>
+        <button
+          class="mx-2 my-2 inline-flex items-center justify-center px-2 py-1
+          text-base leading-5 rounded-md border font-medium shadow-sm transition
+          ease-in-out duration-150 focus:outline-none focus:shadow-outline
+          bg-teal-600 border-teal-600 text-gray-100 hover:bg-teal-500
+          hover:border-teal-500 hover:text-gray-100"
+          on:click={() => auth.signOut()}>
+          Logout
+        </button>
+      </div>
+    </nav>
+  </div>
+  <div slot="signed-out">
+    <nav class="flex justify-between bg-white px-4 shadow-md">
       <div>
         <img
           src={logo}
@@ -69,8 +72,8 @@
           Login amb Google
         </button>
       </div>
-    </div>
-  </User>
+    </nav>
+  </div>
+</User>
 
-</nav>
 <!-- {JSON.stringify($user)} -->

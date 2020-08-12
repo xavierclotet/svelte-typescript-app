@@ -1,23 +1,27 @@
-<script lang="ts">
+<script>
+  import { Collection } from "sveltefire";
+  import { getContext } from "svelte";
   import TodoItem from "./TodoItem.svelte";
-  import { db } from "../firebase";
-  import { collectionData } from "rxfire/firestore";
-  import { startWith } from "rxjs/operators";
+  import "firebase/firestore";
 
   // User ID passed from parent
-  export let uid: string;
-
+  export let uid;
+  const app = getContext("firebase").getFirebase();
+  const db = app.firestore();
   // Form Text
   let text = "";
-  let placeholder = "Your Task..";
+  let placeholder = "Afegir tasca..";
+  let query = (ref) => ref.where("uid", "==", uid).orderBy("created");
 
-  // Query requires an index
-  const query = db
-    .collection("todos")
-    .where("uid", "==", uid)
-    .orderBy("created");
+  function removeItem(event) {
+    const { id } = event.detail;
+    db.collection("todos").doc(id).delete();
+  }
 
-  const todos = collectionData(query, "id").pipe(startWith([]));
+  function updateStatus(event) {
+    const { id, newStatus } = event.detail;
+    db.collection("todos").doc(id).update({ complete: newStatus });
+  }
 
   function add() {
     if (text) {
@@ -31,15 +35,12 @@
     }
   }
 
-  function updateStatus(event) {
-    const { id, newStatus } = event.detail;
-    db.collection("todos").doc(id).update({ complete: newStatus });
-  }
-
-  function removeItem(event) {
-    const { id } = event.detail;
-    db.collection("todos").doc(id).delete();
-  }
+  const onKeyDown = (event) => {
+    let key = event.key;
+    if (key === "Enter") {
+      add();
+    }
+  };
 </script>
 
 <style>
@@ -48,12 +49,34 @@
   }
 </style>
 
-<ul>
-  {#each $todos as todo}
-    <TodoItem {...todo} on:remove={removeItem} on:toggle={updateStatus} />
-  {/each}
-</ul>
+<Collection path={'todos'} {query} let:data>
 
-<input bind:value={text} {placeholder} />
+  <ul>
+    {#each data as todo}
+      <TodoItem {...todo} on:remove={removeItem} on:toggle={updateStatus} />
+    {/each}
+  </ul>
 
-<button on:click={add}>Add Task</button>
+  <div class="flex">
+
+    <input
+      class="flex-initial shadow appearance-none border rounded py-2 px-3
+      text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+      id="task"
+      bind:value={text}
+      on:keydown={onKeyDown}
+      {placeholder}
+      type="text" />
+
+    <button
+      class="flex-initial mx-2 my-2 inline-flex items-center justify-center px-2
+      py-1 text-base leading-5 rounded-md border font-medium shadow-sm
+      transition ease-in-out duration-150 focus:outline-none
+      focus:shadow-outline bg-green-600 border-green-600 text-gray-100
+      hover:bg-green-500 hover:border-green-500 hover:text-gray-100"
+      on:click={add}>
+      Add Task
+    </button>
+  </div>
+
+</Collection>
