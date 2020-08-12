@@ -1,6 +1,6 @@
 <script lang="ts">
   import TodoItem from "./TodoItem.svelte";
-  import { db } from "./firebase";
+  import { db } from "../firebase";
   import { collectionData } from "rxfire/firestore";
   import { startWith } from "rxjs/operators";
 

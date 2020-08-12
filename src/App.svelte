@@ -1,18 +1,21 @@
-<script>
+<script lang="ts">
   import { Router } from "@sveltech/routify";
   import { routes } from "@sveltech/routify/tmp/routes";
+  import * as firebase from "firebase/app";
+  // import firebase from "firebase/app";
+  import "firebase/auth";
+  import "firebase/firestore";
 
-  /*   interface GoogleUser {
-    uid: string;
-    displayName: string;
-    email: string;
-    phoneNumber: string;
-    photoURL: string;
-    providerId: string;
-  } */
+  import { FirebaseApp } from "sveltefire";
+  import { firebaseConfig } from "./firebase";
+
+  export const provider = new firebase.auth.GoogleAuthProvider();
+  firebase.initializeApp(firebaseConfig);
 </script>
 
-<Router {routes} />
+<FirebaseApp {firebase}>
+  <Router {routes} />
+</FirebaseApp>
 
 <!-- <section>
 

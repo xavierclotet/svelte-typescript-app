@@ -2805,6 +2805,11 @@ svelte@3.24.0, svelte@^3.0.0:
   resolved "https://registry.yarnpkg.com/svelte/-/svelte-3.24.0.tgz#6565a42c9705796fa66c6abb4fedc09f4323a4a8"
   integrity sha512-VFXom6EP2DK83kxy4ZlBbaZklSbZIrpNH3oNXlPYHJUuW4q1OuAr3ZoYbfIVTVYPDgrI7Yq0gQcOhDlAtO4qfw==
 
+sveltefire@^0.1.5:
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/sveltefire/-/sveltefire-0.1.5.tgz#0bbfb74b3e991933016805dc9206f686c868fec1"
+  integrity sha512-DiIt6kl6wlmsQO4sOyP0xxCTJ14miXJoiFJXurnqHMuZsX48CVqFk3r86QaPZxer/VqJggvBEIT9ZmvalEFdJQ==
+
 symbol-tree@^3.2.4:
   version "3.2.4"
   resolved "https://registry.yarnpkg.com/symbol-tree/-/symbol-tree-3.2.4.tgz#430637d248ba77e078883951fb9aa0eed7c63fa2"

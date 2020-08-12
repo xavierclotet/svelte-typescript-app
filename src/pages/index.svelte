@@ -1,5 +1,9 @@
 <script>
-  import { user } from "../stores/user";
+  import { User } from "sveltefire";
+  import { metatags } from "@sveltech/routify";
+
+  metatags.title = "Stas tarat";
+  metatags.description = "Stas tarat app";
 </script>
 
 <div
@@ -7,8 +11,9 @@
   Benvingut a bordu!
 </div>
 
-{#if $user}
-  <p class="mx-2">Ei {$user.displayName} que bueno q viniste!</p>
-{:else}
-  <p class="mx-2">Fes login amb la teva compta Google per poder entrar.</p>
-{/if}
+<User let:user let:auth>
+  <p class="mx-2">Ei {user.displayName} que bueno q viniste!</p>
+  <div slot="signed-out">
+    <p class="mx-2">Fes login amb la teva compta Google per poder entrar.</p>
+  </div>
+</User>

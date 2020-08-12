@@ -4,4 +4,4 @@
 .DS_Store
 
 
-/src/firebase.js
+/src/firebase.ts

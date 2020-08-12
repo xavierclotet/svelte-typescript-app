@@ -1,27 +1,30 @@
 <script>
   import { url, isActive } from "@sveltech/routify";
-  import { auth, googleProvider } from "../firebase";
-  import { user } from "../stores/user";
+  import "firebase/auth";
+  // import { auth, googleProvider } from "../firebase_OLD";
   import Profile from "./Profile.svelte";
   import logo from "../statics/legamoleftframegrande.jpg";
+  import { User } from "sveltefire";
+  import { login } from "../services/handlers";
+
   const links = [
     ["/index", "Home"],
     ["/hotness", "Hotness"],
-    ["/test", "Test"],
+    ["/search", "Buscar"],
     ["/about", "About"],
   ];
 
-  function login() {
+  /*   function login() {
     auth.signInWithPopup(googleProvider);
-  }
+  } */
 </script>
 
 <nav class="flex justify-between bg-white px-4 shadow-md ">
 
   <!-- {user ? 'justify-between' : 'justify-between'} -->
-  {#if $user}
+  <User let:user let:auth>
     <div>
-      <Profile user={$user} />
+      <Profile {user} />
     </div>
     <div class="flex justify-center">
       {#each links as [path, name]}
@@ -46,26 +49,28 @@
         Logout
       </button>
     </div>
-  {:else}
-    <div>
-      <img
-        src={logo}
-        alt="stas tarat"
-        title="stas tarat"
-        class="px-2 py-2 rounded-full w-12 h-12" />
+    <div slot="signed-out">
+      <div>
+        <img
+          src={logo}
+          alt="stas tarat"
+          title="stas tarat"
+          class="px-2 py-2 rounded-full w-12 h-12" />
+      </div>
+      <div>
+        <button
+          class="mx-2 my-2 inline-flex items-center justify-center px-2 py-1
+          text-base leading-5 rounded-md border font-medium shadow-sm transition
+          ease-in-out duration-150 focus:outline-none focus:shadow-outline
+          bg-green-600 border-green-600 text-gray-100 hover:bg-green-500
+          hover:border-green-500 hover:text-gray-100"
+          on:click={login}>
+          <!-- auth.signInWithPopup() -->
+          Login amb Google
+        </button>
+      </div>
     </div>
-    <div>
-      <button
-        class="mx-2 my-2 inline-flex items-center justify-center px-2 py-1
-        text-base leading-5 rounded-md border font-medium shadow-sm transition
-        ease-in-out duration-150 focus:outline-none focus:shadow-outline
-        bg-green-600 border-green-600 text-gray-100 hover:bg-green-500
-        hover:border-green-500 hover:text-gray-100"
-        on:click={login}>
-        Login amb Google
-      </button>
-    </div>
-  {/if}
+  </User>
 
 </nav>
 <!-- {JSON.stringify($user)} -->
