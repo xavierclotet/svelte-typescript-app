@@ -2480,13 +2480,6 @@ run-parallel@^1.1.9:
   resolved "https://registry.yarnpkg.com/run-parallel/-/run-parallel-1.1.9.tgz#c9dd3a7cf9f4b2c4b6244e173a6ed866e61dd679"
   integrity sha512-DEqnSRTDw/Tc3FXf49zedI638Z9onwUotBMiUFKmrO2sdFKIbXamXGQ3Axd4qgphxKB4kw/qP1w5kTxnfU1B9Q==
 
-rxfire@^3.13.5:
-  version "3.13.5"
-  resolved "https://registry.yarnpkg.com/rxfire/-/rxfire-3.13.5.tgz#465a88561b1c139a383216efc2e156f85143fa19"
-  integrity sha512-NyGc9syGjx5W0I5L6c4YioXbjrJTXMSo74RWTiozunOAo04sD+LM/+vQ7HWk+XUZISC/Nk8s/NKo6+mkT0ov6w==
-  dependencies:
-    tslib "^1.11.1"
-
 rxjs@^6.6.0:
   version "6.6.0"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.6.0.tgz#af2901eedf02e3a83ffa7f886240ff9018bbec84"
@@ -2771,6 +2764,11 @@ svelte-language-server@*:
     vscode-languageserver "6.1.1"
     vscode-languageserver-types "3.15.1"
     vscode-uri "2.1.1"
+
+svelte-mui@^0.3.3-4:
+  version "0.3.3-4"
+  resolved "https://registry.yarnpkg.com/svelte-mui/-/svelte-mui-0.3.3-4.tgz#ca136de4e0578a614a328849cd3da1f18cc435e4"
+  integrity sha512-FytBWkvTQFLCqqkoFHkldGWcKj/vg8Qqinv/NH98VzGyAWY5xrK6alZw1HXmWXWGRKTl2AR6zeOf7ZO0aYoI4g==
 
 svelte-preprocess@^4.0.0:
   version "4.0.8"

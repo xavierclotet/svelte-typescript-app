@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
-
+  import { Textfield } from "svelte-mui";
   interface BggGame {
     gameId: number;
     name: string;
@@ -9,6 +9,7 @@
     yearPublished: number;
   }
   export let top: number = 10;
+
   $: title = `Hotness BGG TOP ${top}`;
   let hotness: BggGame[] = [];
 
@@ -31,16 +32,16 @@
 </div>
 
 <div class="flex mx-2 text-md">
-  <div class="mr-4 py-2">Show</div>
-  <input
-    type="number"
-    bind:value={top}
-    min="1"
-    max="50"
-    class="block appearance-none w-15 border border-gray-700
-    hover:border-gray-500 px-4 py-2 pr-8 rounded shadow outline-none
-    focus:shadow-outline" />
-  <div class="ml-2 py-2">results</div>
+  <div class="py-2 w-40">
+    <Textfield
+      label="Quants?"
+      min="1"
+      max="50"
+      autocomplete="off"
+      type="number"
+      message="Numero de jocs a veure"
+      bind:value={top} />
+  </div>
 </div>
 
 <div class="flex flex-wrap mx-2">
