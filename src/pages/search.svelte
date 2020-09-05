@@ -4,7 +4,7 @@
   let game;
 
   function handleButton() {
-    $goto("/" + game + "/picture");
+    $goto("/" + game + "/list");
   }
 </script>
 

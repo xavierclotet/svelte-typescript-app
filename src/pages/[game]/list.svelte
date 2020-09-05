@@ -1,7 +1,9 @@
 <script>
-  import { params } from "@sveltech/routify";
+  import { params, goto } from "@sveltech/routify";
   import { onMount } from "svelte";
+
   let game = $params.game;
+  let gamesParsed = [];
   let promise = Promise.resolve([]);
   const url = `https://www.boardgamegeek.com/xmlapi2/search?type=boardgame&query=${game}`; // &exact=1
   const urlGame = `http://bgg-json.azurewebsites.net/thing/`;
@@ -12,20 +14,43 @@
       const data = await response.text();
       let parser = new DOMParser();
       let xmlDoc = parser.parseFromString(data, "text/xml");
-      let idGame = xmlDoc
-        .getElementsByTagName("items")[0]
-        .getElementsByTagName("item")[0]
-        .getAttribute("id");
-      response = await fetch(urlGame + idGame);
-      return response.json();
+
+      gamesParsed = parseXmlGames(xmlDoc);
+      /*  response = await fetch(urlGame + idGame);
+      return response.json(); */
     } else {
       throw new Error("Error fetching game");
     }
   }
+  function parseXmlGames(xmlDoc) {
+    let xmlGames = xmlDoc
+      .getElementsByTagName("items")[0]
+      .getElementsByTagName("item");
 
-  function goToBgg(id) {
-    const url = `https://boardgamegeek.com/boardgame/${id}`;
-    window.open(url);
+    let games = [];
+    for (let index = 0; index < xmlGames.length; index++) {
+      const idGame = xmlGames[index] ? xmlGames[index].getAttribute("id") : "";
+      const nameGame = xmlGames[index].getElementsByTagName("name")[0]
+        ? xmlGames[index].getElementsByTagName("name")[0].getAttribute("value")
+        : "";
+      const yearGame = xmlGames[index].getElementsByTagName("yearpublished")[0]
+        ? xmlGames[index]
+            .getElementsByTagName("yearpublished")[0]
+            .getAttribute("value")
+        : "";
+      if (nameGame) {
+        games.push({
+          id: idGame,
+          name: nameGame,
+          yearpublished: yearGame,
+        });
+      }
+    }
+    return games;
+  }
+
+  function goToDetails(gameId) {
+    $goto("/" + game + "/details/" + gameId);
   }
 
   function handleClick() {
@@ -40,10 +65,18 @@
 
 <div
   class="text-sm bg-teal-700 text-white mb-6 rounded px-2 py-2 mx-2 uppercase">
-  {game}
+  {game} trobat en {gamesParsed.length} jocs
 </div>
 
-{#await promise}
+<ul class="mx-4">
+  {#each gamesParsed as game}
+    <li on:click={goToDetails(game.id)} class="cursor-pointer">
+      {game.name} ({game.yearpublished})
+    </li>
+  {/each}
+</ul>
+
+<!-- {#await promise}
   <p>Carregant {game}...</p>
 {:then game}
   <div
@@ -83,8 +116,8 @@
     </ul>
   {/if}
 
-  <!-- <pre>{JSON.stringify(game)}</pre> -->
 
 {:catch error}
   {error}
 {/await}
+ -->
