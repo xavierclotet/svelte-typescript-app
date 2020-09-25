@@ -18,6 +18,7 @@
     "@rollup/plugin-node-resolve": "^8.0.0",
     "@rollup/plugin-typescript": "^4.0.0",
     "@sveltech/routify": "^1.9.7",
+    "@testing-library/svelte": "^3.0.0",
     "@tsconfig/svelte": "^1.0.0",
     "npm-run-all": "^4.1.5",
     "postcss-cli": "^7.1.1",
@@ -27,16 +28,25 @@
     "rollup-plugin-terser": "^5.1.2",
     "svelte": "^3.0.0",
     "svelte-check": "^0.1.0",
+    "svelte-jester": "^1.1.5",
     "svelte-mui": "^0.3.3-4",
     "svelte-preprocess": "^4.0.0",
     "tslib": "^2.0.0",
     "typescript": "^3.9.3"
   },
   "dependencies": {
+    "babel-jest": "^26.3.0",
     "firebase": "^7.16.1",
+    "jest": "^26.4.2",
     "rxjs": "^6.6.0",
     "sirv-cli": "^0.4.4",
     "sveltefire": "^0.1.5",
     "tailwindcss": "^1.5.2"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.svelte$": "svelte-jester"
+    },
+    "moduleFileExtensions": ["js", "svelte"]
   }
 }

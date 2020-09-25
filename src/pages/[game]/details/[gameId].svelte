@@ -17,8 +17,13 @@
 
 {#if game !== null}
   <div
-    class="text-sm bg-teal-700 text-white mb-6 rounded px-2 py-2 mx-2 uppercase">
-    {game.name} ({game.averageRating})
+    class="flex flex-row justify-between text-sm bg-teal-700 text-white mb-6
+    rounded px-2 py-2 mx-2 uppercase">
+    <span>{game.name}</span>
+    <!-- ({game.averageRating}) -->
+    <span class="cursor-pointer" on:click={$goto('/' + game.name + '/list')}>
+      Tornar
+    </span>
   </div>
 
   <div
@@ -31,7 +36,6 @@
         {game.name} ({game.yearPublished})
       </div>
       <img
-        on:click={goToBgg(gameId)}
         class="h-15 w-15 rounded-full "
         src={game.thumbnail}
         alt={game.name}
@@ -39,13 +43,10 @@
         style="height: 158px; width: 158px"
         target="_blank" />
 
-      <!-- <div>{game.description}</div> -->
+      <!-- <div>{game.description}</div>  on:click={goToBgg(gameId)} -->
       <div>
-        <ul>
-          {#each game.artists as artist}
-            <li>{artist}</li>
-          {/each}
-        </ul>
+        Dissenyadors:
+        {#each game.artists as artist}{artist},{/each}
       </div>
 
       <p>{game.description}</p>

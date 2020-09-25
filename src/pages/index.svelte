@@ -4,6 +4,7 @@
 
   metatags.title = "Stas tarat";
   metatags.description = "Stas tarat app";
+  let info = 'test';
 </script>
 
 <div
